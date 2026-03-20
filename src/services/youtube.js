@@ -1,30 +1,33 @@
 const clientId = import.meta.env.VITE_YOUTUBE_CLIENT_ID
 
-export function getYouTubeToken(onSuccess, onError) {
-  if (!clientId) {
-    if (onError) onError(new Error("Missing VITE_YOUTUBE_CLIENT_ID"))
-    return
-  }
-
-  if (typeof google === 'undefined') {
-    if (onError) onError(new Error("Google Identity script not loaded"))
-    return
-  }
-
-  const tokenClient = google.accounts.oauth2.initTokenClient({
-    client_id: clientId,
-    scope: "https://www.googleapis.com/auth/youtube",
-    callback: (res) => {
-      if (res.error !== undefined) {
-        if (onError) onError(res)
-        return
-      }
-      sessionStorage.setItem('youtube_token', res.access_token)
-      if (onSuccess) onSuccess(res.access_token)
+export function getYouTubeToken() {
+  return new Promise((resolve, reject) => {
+    if (!clientId) {
+      reject(new Error("Missing VITE_YOUTUBE_CLIENT_ID"))
+      return
     }
+
+    if (typeof window.google === 'undefined') {
+      reject(new Error("Google Identity script not loaded"))
+      return
+    }
+
+    const tokenClient = window.google.accounts.oauth2.initTokenClient({
+      client_id: clientId,
+      scope: "https://www.googleapis.com/auth/youtube",
+      callback: (res) => {
+        if (res.error !== undefined) {
+          reject(new Error(res.error))
+          return
+        }
+
+        sessionStorage.setItem('youtube_token', res.access_token)
+        resolve(res.access_token)
+      }
+    })
+
+    tokenClient.requestAccessToken()
   })
-  
-  tokenClient.requestAccessToken()
 }
 
 export async function searchYouTubeVideo(title, artist, token) {

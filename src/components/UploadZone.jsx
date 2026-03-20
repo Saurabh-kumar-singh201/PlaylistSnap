@@ -35,60 +35,64 @@ export default function UploadZone({ onImageSelected }) {
 
   if (preview) {
     return (
-      <div className="relative group w-full rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-        <img src={preview} alt="Tracklist preview" className="w-full object-cover max-h-[400px]" />
-        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col items-center justify-center backdrop-blur-sm">
-           <button 
+      <div className="relative group w-full overflow-hidden rounded-[1.4rem] border border-white/10 bg-black/25">
+        <img src={preview} alt="Tracklist preview" className="w-full max-h-[360px] object-cover" />
+        <div className="absolute inset-0 flex items-center justify-center gap-3 bg-[linear-gradient(180deg,rgba(7,5,19,0.08),rgba(7,5,19,0.66))] opacity-0 transition group-hover:opacity-100">
+          <button
             onClick={resetImage}
-            className="mb-4 bg-red-500/80 hover:bg-red-500 text-white rounded-full p-3 transition shadow-lg backdrop-blur-md"
+            className="rounded-full border border-white/15 bg-white text-[#140f2c] p-2.5 shadow-lg"
             title="Remove Image"
-           >
-              <X className="w-6 h-6" />
-           </button>
-           <button 
+          >
+            <X className="w-5 h-5" />
+          </button>
+          <button
             onClick={() => fileInputRef.current?.click()}
-            className="px-6 py-2.5 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-medium rounded-full transition backdrop-blur-md"
-           >
-              Change Image
-           </button>
+            className="rounded-full border border-white/15 bg-white/12 px-5 py-2 text-sm font-medium text-white backdrop-blur-md"
+          >
+            Change image
+          </button>
         </div>
-        <input 
-          type="file" 
+        <input
+          type="file"
           ref={fileInputRef}
           onChange={handleChange}
           accept="image/png, image/jpeg, image/webp"
-          className="hidden" 
+          className="hidden"
         />
       </div>
     )
   }
 
   return (
-    <div 
-      className={`glass rounded-2xl p-10 md:p-14 border-2 border-dashed transition duration-300 cursor-pointer flex flex-col items-center justify-center text-center
-        ${isDragging ? 'border-indigo-400 bg-indigo-500/10' : 'border-white/20 hover:border-white/40 hover:bg-white/5'}`}
+    <div
+      className={`upload-surface rounded-[1.55rem] p-8 md:p-10 border cursor-pointer text-center transition duration-300 ${
+        isDragging ? 'border-white/40 bg-white/12' : 'border-white/10 hover:border-white/20'
+      }`}
       onDragOver={(e) => { e.preventDefault(); setIsDragging(true) }}
       onDragLeave={() => setIsDragging(false)}
       onDrop={handleDrop}
       onClick={() => fileInputRef.current?.click()}
     >
-      <input 
-        type="file" 
+      <input
+        type="file"
         ref={fileInputRef}
         onChange={handleChange}
         accept="image/png, image/jpeg, image/webp"
-        className="hidden" 
+        className="hidden"
       />
-      
-      <div className="w-20 h-20 mb-6 bg-indigo-500/20 text-indigo-300 rounded-full flex items-center justify-center border border-indigo-500/30 shadow-[0_0_30px_rgba(99,102,241,0.2)]">
-        <UploadCloud className="w-10 h-10" />
+
+      <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-white/10 bg-white/8 text-white">
+        <UploadCloud className="w-8 h-8" />
       </div>
-      <h3 className="text-2xl font-semibold mb-2 text-white/90">Click to upload</h3>
-      <p className="text-neutral-400 text-lg mb-6">or drag and drop your tracklist image</p>
-      
-      <div className="flex items-center space-x-2 text-xs text-neutral-500 bg-black/20 px-4 py-2 rounded-full border border-white/5">
+
+      <h3 className="text-2xl md:text-3xl font-semibold tracking-[-0.05em] text-white">Drop your image here</h3>
+      <p className="mt-3 text-sm md:text-base leading-7 text-white/62 max-w-xl mx-auto">
+        Upload a screenshot, poster, or handwritten tracklist. Supported formats: JPG, PNG, and WEBP.
+      </p>
+
+      <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/6 px-3.5 py-2 text-[0.78rem] text-white/62">
         <ImageIcon className="w-4 h-4" />
-        <span>Supports JPG, PNG and WEBP</span>
+        <span>Click to browse or drag and drop</span>
       </div>
     </div>
   )

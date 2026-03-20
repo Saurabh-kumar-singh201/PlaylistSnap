@@ -4,23 +4,22 @@ export default function SongCard({ song, onToggle }) {
   return (
     <div 
       onClick={() => onToggle(song.id)}
-      className={`glass-panel p-4 rounded-xl flex items-center gap-4 cursor-pointer transition duration-300 transform hover:-translate-y-1 hover:shadow-xl
-        ${song.selected ? 'border-indigo-500/50 bg-indigo-500/10' : 'opacity-60 grayscale-[50%]'}`}
+      className={`rounded-[1.25rem] flex items-center gap-3 cursor-pointer transition border p-4
+        ${song.selected ? 'border-white/24 bg-white/12' : 'border-white/10 bg-white/5 hover:border-white/18 opacity-75'}`}
     >
-      <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition flex-shrink-0
-        ${song.selected ? 'bg-indigo-500 border-indigo-500 text-white' : 'border-neutral-500'}
+      <div className={`w-5 h-5 rounded-full border flex items-center justify-center transition flex-shrink-0
+        ${song.selected ? 'bg-white border-white text-[#140f2c]' : 'border-white/28'}
       `}>
-        {song.selected && <Check className="w-4 h-4" />}
+        {song.selected && <Check className="w-3.5 h-3.5" />}
       </div>
       
-      <div className="w-12 h-12 rounded-lg bg-neutral-800 flex items-center justify-center flex-shrink-0 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-500/20"></div>
-        <Music className="w-5 h-5 text-neutral-400" />
+      <div className="w-10 h-10 rounded-xl bg-white/6 flex items-center justify-center flex-shrink-0 border border-white/10">
+        <Music className="w-4 h-4 text-white/62" />
       </div>
       
       <div className="flex-1 min-w-0">
-        <h4 className="text-white font-medium truncate">{song.title}</h4>
-        <p className="text-neutral-400 text-sm truncate">{song.artist}</p>
+        <h4 className="text-white text-[0.98rem] font-medium truncate">{song.title}</h4>
+        <p className="text-white/56 text-[0.84rem] truncate">{song.artist}</p>
       </div>
     </div>
   )
